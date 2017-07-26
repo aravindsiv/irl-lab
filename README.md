@@ -13,7 +13,7 @@ The following algorithms have been implemented:
 * [Relative Entropy Inverse Reinforcement Learning](http://proceedings.mlr.press/v15/boularias11a/boularias11a.pdf)
 
 ## Sample Usage
-```
+```python
 from env.GridWorld import GridWorld
 from algo.PolicyIteration import PolicyIteration
 from algo.RelEntIRL import RelEntIRL
