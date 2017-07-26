@@ -16,7 +16,6 @@ class GridWorld:
         _[state] = 1
         return _
         
-    
     def get_rewards(self):
         return self.rewards.flatten()
     
@@ -29,16 +28,19 @@ class GridWorld:
         next_state = next_states[np.random.choice(range(len(next_states)),p=transition_probs)]
         return next_state[0]*self.grid_size+next_state[1]
     
-    def generate_trajectory(self,policy,num_trajectories=10):
+    def generate_trajectory(self,policy=None,num_trajectories=10):
+        if policy is None:
+            policy = np.random.choice(self.actions,size=(self.num_states))
         trajectories = []
         for i in range(num_trajectories):
             trajectory = []
             current_state = np.random.randint(self.num_states)
-            while current_state != self.goal_state and len(trajectory) < self.grid_size*3: # naive check, but will do
+            while current_state != self.goal_state and len(trajectory) < self.grid_size*3:
                 trajectory.append(self.get_feature(current_state))
                 current_state = self.result_of_action(current_state,policy[current_state])
-            trajectory.append(self.get_feature(self.goal_state))
-            trajectories.append(trajectory)
+            if current_state == self.goal_state:
+                trajectory.append(self.get_feature(self.goal_state))
+            trajectories.append(np.array(trajectory))
         return np.array(trajectories)
         
     
@@ -80,4 +82,3 @@ class GridWorld:
                                                 values[state_coords[0],max(0,state_coords[1]-1)],
                                                 values[state_coords[0],min(self.grid_size-1,state_coords[1]+1)]])]
         return policy
-            

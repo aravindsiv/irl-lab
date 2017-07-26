@@ -1,4 +1,5 @@
 from utils import feature_averages
+import numpy as np
 
 class RelEntIRL:
     def __init__(self,expert_demos,nonoptimal_demos):
